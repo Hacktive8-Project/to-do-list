@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>My To-Do List</h1>
+
+      <div class="input-container">
+        <input
+          type="text"
+          id="todoInput"
+          placeholder="Tambahkan tugas baru..."
+          autocomplete="off"
+        />
+        <button id="addBtn">Tambah</button>
+      </div>
+
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="active">Aktif</button>
+        <button class="filter-btn" data-filter="completed">Selesai</button>
+      </div>
+
+      <ul id="todoList"></ul>
+
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-number" id="totalTasks">0</div>
+          <div class="stat-label">Total Tugas</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="activeTasks">0</div>
+          <div class="stat-label">Aktif</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="completedTasks">0</div>
+          <div class="stat-label">Selesai</div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
