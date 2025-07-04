@@ -5,41 +5,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-Do List App</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
   </head>
   <body>
     <div class="container">
-      <h1>My To-Do List</h1>
-
-      <div class="input-container">
-        <input
-          type="text"
-          id="todoInput"
-          placeholder="Tambahkan tugas baru..."
-          autocomplete="off"
-        />
-        <button id="addBtn">Tambah</button>
+      <div class="header">
+        <h1>📝 To-Do List App</h1>
+        <p>Kelola tugas Anda dengan mudah</p>
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <span class="theme-icon">🌙</span>
+          <span class="theme-text">Dark Mode</span>
+        </button>
       </div>
-
-      <div class="filters">
-        <button class="filter-btn active" data-filter="all">Semua</button>
-        <button class="filter-btn" data-filter="active">Aktif</button>
-        <button class="filter-btn" data-filter="completed">Selesai</button>
-      </div>
-
-      <ul id="todoList"></ul>
 
       <div class="stats">
-        <div class="stat-item">
-          <div class="stat-number" id="totalTasks">0</div>
-          <div class="stat-label">Total Tugas</div>
+        <div class="stat-card">
+          <h3>Total Tugas</h3>
+          <div class="value" id="totalTasks">0</div>
         </div>
-        <div class="stat-item">
-          <div class="stat-number" id="activeTasks">0</div>
-          <div class="stat-label">Aktif</div>
+        <div class="stat-card">
+          <h3>Selesai</h3>
+          <div class="value" id="completedTasks">0</div>
         </div>
-        <div class="stat-item">
-          <div class="stat-number" id="completedTasks">0</div>
-          <div class="stat-label">Selesai</div>
+        <div class="stat-card">
+          <h3>Aktif</h3>
+          <div class="value" id="activeTasks">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Progress</h3>
+          <div class="value" id="progressPercent">0%</div>
+        </div>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressBar"></div>
+      </div>
+
+      <div class="controls">
+        <div class="input-group">
+          <input
+            type="text"
+            id="taskInput"
+            placeholder="Tambah tugas baru..."
+          />
+          <select id="categoryInput">
+            <option value="personal">Personal</option>
+            <option value="work">Pekerjaan</option>
+            <option value="shopping">Belanja</option>
+            <option value="health">Kesehatan</option>
+            <option value="study">Belajar</option>
+          </select>
+          <select id="priorityInput">
+            <option value="low">Prioritas Rendah</option>
+            <option value="medium">Prioritas Sedang</option>
+            <option value="high">Prioritas Tinggi</option>
+          </select>
+          <input type="date" id="dueDateInput" />
+          <button class="btn-primary" onclick="addTask()">Tambah</button>
+        </div>
+
+        <div class="filters">
+          <input
+            type="text"
+            class="search-box"
+            id="searchInput"
+            placeholder="Cari tugas..."
+            oninput="filterTasks()"
+          />
+          <button class="filter-btn active" onclick="setFilter('all')">
+            Semua
+          </button>
+          <button class="filter-btn" onclick="setFilter('active')">
+            Aktif
+          </button>
+          <button class="filter-btn" onclick="setFilter('completed')">
+            Selesai
+          </button>
+          <select onchange="sortTasks(this.value)">
+            <option value="date-desc">Terbaru</option>
+            <option value="date-asc">Terlama</option>
+            <option value="priority">Prioritas</option>
+            <option value="duedate">Tanggal Jatuh Tempo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="todo-list" id="todoList">
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+          </svg>
+          <h3>Belum ada tugas</h3>
+          <p>Mulai tambahkan tugas Anda!</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="editModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit Tugas</h2>
+          <button class="btn-icon" onclick="closeEditModal()">✕</button>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="editTaskInput" placeholder="Nama tugas" />
+          <select id="editCategoryInput">
+            <option value="personal">Personal</option>
+            <option value="work">Pekerjaan</option>
+            <option value="shopping">Belanja</option>
+            <option value="health">Kesehatan</option>
+            <option value="study">Belajar</option>
+          </select>
+          <select id="editPriorityInput">
+            <option value="low">Prioritas Rendah</option>
+            <option value="medium">Prioritas Sedang</option>
+            <option value="high">Prioritas Tinggi</option>
+          </select>
+          <input type="date" id="editDueDateInput" />
+          <button class="btn-primary" onclick="updateTask()">
+            Simpan Perubahan
+          </button>
         </div>
       </div>
     </div>
