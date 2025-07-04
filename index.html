@@ -96,6 +96,24 @@
             <option value="priority">Prioritas</option>
             <option value="duedate">Tanggal Jatuh Tempo</option>
           </select>
+          <div class="json-controls">
+            <button class="btn-export" onclick="exportTasksAsJSON()">
+              📥 Export JSON
+            </button>
+            <input
+              type="file"
+              id="jsonFileInput"
+              accept=".json"
+              style="display: none"
+              onchange="importTasksFromJSON(this.files[0])"
+            />
+            <button
+              class="btn-import"
+              onclick="document.getElementById('jsonFileInput').click()"
+            >
+              📤 Import JSON
+            </button>
+          </div>
         </div>
       </div>
 

@@ -211,6 +211,19 @@ body {
     left: 10px;
     font-size: 0.7em;
   }
+
+  /* JSON Controls */
+  .json-controls {
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+  }
+
+  .btn-export,
+  .btn-import {
+    width: 100%;
+    padding: 10px 12px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -238,6 +251,18 @@ body {
   .filter-btn {
     min-width: 80px;
     text-align: center;
+  }
+
+  .json-controls {
+    order: -1;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .btn-export,
+  .btn-import {
+    width: auto;
+    min-width: 120px;
   }
 }
 
@@ -680,5 +705,71 @@ button {
   50% {
     box-shadow: 0 4px 20px rgba(245, 158, 11, 0.6),
       0 0 0 4px rgba(245, 158, 11, 0.15);
+  }
+}
+
+/* JSON Controls Styling */
+.json-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-export,
+.btn-import {
+  padding: 8px 12px;
+  border: 2px solid var(--primary-color);
+  background: var(--bg-color);
+  color: var(--primary-color);
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+.btn-export:hover,
+.btn-import:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+.btn-export:active,
+.btn-import:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .json-controls {
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+  }
+
+  .btn-export,
+  .btn-import {
+    width: 100%;
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .filters {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .json-controls {
+    order: -1;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .btn-export,
+  .btn-import {
+    width: auto;
+    min-width: 120px;
   }
 }

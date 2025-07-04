@@ -1,7 +1,67 @@
-// Data storage (in-memory)
+// Data storage using JSON in localStorage
+const STORAGE_KEY = "todolist_tasks";
 let tasks = [];
 let currentFilter = "all";
 let editingTaskId = null;
+
+// JSON Database functions
+function saveTasksToStorage() {
+  try {
+    const tasksJSON = JSON.stringify(tasks);
+    localStorage.setItem(STORAGE_KEY, tasksJSON);
+    console.log("Tasks saved to JSON storage:", tasks.length, "tasks");
+  } catch (error) {
+    console.error("Error saving tasks to storage:", error);
+  }
+}
+
+function loadTasksFromStorage() {
+  try {
+    const tasksJSON = localStorage.getItem(STORAGE_KEY);
+    if (tasksJSON) {
+      tasks = JSON.parse(tasksJSON);
+      console.log("Tasks loaded from JSON storage:", tasks.length, "tasks");
+    } else {
+      tasks = [];
+      console.log("No existing tasks found, starting with empty list");
+    }
+  } catch (error) {
+    console.error("Error loading tasks from storage:", error);
+    tasks = [];
+  }
+}
+
+function exportTasksAsJSON() {
+  const dataStr = JSON.stringify(tasks, null, 2);
+  const dataBlob = new Blob([dataStr], { type: "application/json" });
+  const url = URL.createObjectURL(dataBlob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "my-todolist.json";
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function importTasksFromJSON(file) {
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      const importedTasks = JSON.parse(e.target.result);
+      if (Array.isArray(importedTasks)) {
+        tasks = importedTasks;
+        saveTasksToStorage();
+        renderTasks();
+        updateStats();
+        alert("Tasks imported successfully!");
+      } else {
+        alert("Invalid JSON format");
+      }
+    } catch (error) {
+      alert("Error importing tasks: " + error.message);
+    }
+  };
+  reader.readAsText(file);
+}
 
 // Theme toggle
 function toggleTheme() {
@@ -53,6 +113,9 @@ function addTask() {
 
   tasks.unshift(task);
 
+  // Save to JSON storage
+  saveTasksToStorage();
+
   // Clear inputs
   taskInput.value = "";
   dueDateInput.value = "";
@@ -65,6 +128,7 @@ function toggleTask(id) {
   const task = tasks.find((t) => t.id === id);
   if (task) {
     task.completed = !task.completed;
+    saveTasksToStorage();
     renderTasks();
     updateStats();
   }
@@ -73,6 +137,7 @@ function toggleTask(id) {
 function deleteTask(id) {
   if (confirm("Apakah Anda yakin ingin menghapus tugas ini?")) {
     tasks = tasks.filter((t) => t.id !== id);
+    saveTasksToStorage();
     renderTasks();
     updateStats();
   }
@@ -98,6 +163,7 @@ function updateTask() {
     task.priority = document.getElementById("editPriorityInput").value;
     task.dueDate = document.getElementById("editDueDateInput").value;
 
+    saveTasksToStorage();
     closeEditModal();
     renderTasks();
     updateStats();
@@ -156,6 +222,7 @@ function sortTasks(sortBy) {
       });
       break;
   }
+  saveTasksToStorage();
   renderTasks();
 }
 
@@ -327,6 +394,9 @@ document.addEventListener("keydown", function (e) {
 
 // Initialize
 function initializeApp() {
+  // Load tasks from JSON storage
+  loadTasksFromStorage();
+
   // Load saved theme
   const savedTheme = localStorage.getItem("theme") || "light";
   document.body.setAttribute("data-theme", savedTheme);
@@ -346,6 +416,8 @@ function initializeApp() {
 
   // Set today's date as default
   document.getElementById("dueDateInput").valueAsDate = new Date();
+
+  console.log("TodoList App initialized with JSON storage");
 }
 
 // Initialize app
