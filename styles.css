@@ -80,7 +80,7 @@ body {
   right: 20px;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
   padding: 14px 22px;
   border-radius: 30px;
   cursor: pointer;
@@ -102,7 +102,7 @@ body {
   background: rgba(255, 255, 255, 0.25);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .theme-toggle:active {
@@ -141,13 +141,13 @@ body {
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.04);
   text-align: center;
   transition: all 0.3s ease;
-  border: 1px solid rgba(139, 92, 246, 0.1);
+  border: 2px solid rgba(139, 92, 246, 0.2);
 }
 
 .stat-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px 0 rgba(139, 92, 246, 0.15);
-  border-color: rgba(139, 92, 246, 0.2);
+  border-color: rgba(139, 92, 246, 0.4);
 }
 
 .stat-card h3 {
@@ -169,7 +169,7 @@ body {
   border-radius: 12px;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.04);
   margin-bottom: 30px;
-  border: 1px solid rgba(99, 102, 241, 0.1);
+  border: 2px solid rgba(99, 102, 241, 0.2);
 }
 
 .input-group {
@@ -201,6 +201,16 @@ body {
   .theme-icon {
     font-size: 1.2em;
   }
+
+  .filter-btn {
+    padding: 10px 18px 10px 26px;
+    font-size: 0.9em;
+  }
+
+  .filter-btn.active::before {
+    left: 10px;
+    font-size: 0.7em;
+  }
 }
 
 @media (max-width: 480px) {
@@ -220,13 +230,22 @@ body {
     text-align: center;
     padding-bottom: 20px;
   }
+
+  .filters {
+    justify-content: center;
+  }
+
+  .filter-btn {
+    min-width: 80px;
+    text-align: center;
+  }
 }
 
 input,
 select,
 button {
   padding: 12px;
-  border: 1px solid var(--border-color);
+  border: 2px solid var(--border-color);
   border-radius: 8px;
   font-size: 1em;
   background: var(--bg-color);
@@ -238,7 +257,7 @@ input:focus,
 select:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
 }
 
 button {
@@ -265,18 +284,132 @@ button {
 }
 
 .filter-btn {
-  padding: 8px 16px;
-  border: 1px solid var(--border-color);
+  padding: 8px 16px 8px 24px;
+  border: 2px solid var(--border-color);
   background: var(--bg-color);
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-weight: 500;
+  position: relative;
+}
+
+.filter-btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.1),
+    rgba(139, 92, 246, 0.1)
+  );
+  border-color: rgba(99, 102, 241, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
 }
 
 .filter-btn.active {
-  background: var(--primary-color);
   color: white;
-  border-color: var(--primary-color);
+  border-width: 2px;
+  transform: translateY(-1px);
+  position: relative;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.5px;
+}
+
+.filter-btn.active::before {
+  content: "●";
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.6em;
+  opacity: 0.8;
+}
+
+/* Additional visual enhancements for filter buttons */
+.filter-btn:not(.active):hover {
+  transform: translateY(-2px);
+}
+
+/* Specific colors for each filter */
+.filter-all.active {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-color: #6366f1;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4),
+    0 0 0 3px rgba(99, 102, 241, 0.1);
+  animation: pulseBlue 2s infinite;
+}
+
+.filter-all.active:hover {
+  background: linear-gradient(135deg, #5b21b6, #7c3aed);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6),
+    0 0 0 4px rgba(99, 102, 241, 0.15);
+  animation: none;
+}
+
+.filter-active.active {
+  background: linear-gradient(135deg, #06d6a0, #34d399);
+  border-color: #06d6a0;
+  box-shadow: 0 4px 15px rgba(6, 214, 160, 0.4),
+    0 0 0 3px rgba(6, 214, 160, 0.1);
+  animation: pulseGreen 2s infinite;
+}
+
+.filter-active.active:hover {
+  background: linear-gradient(135deg, #059669, #10b981);
+  box-shadow: 0 6px 20px rgba(6, 214, 160, 0.6),
+    0 0 0 4px rgba(6, 214, 160, 0.15);
+  animation: none;
+}
+
+.filter-completed.active {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  border-color: #f59e0b;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4),
+    0 0 0 3px rgba(245, 158, 11, 0.1);
+  animation: pulseOrange 2s infinite;
+}
+
+.filter-completed.active:hover {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6),
+    0 0 0 4px rgba(245, 158, 11, 0.15);
+  animation: none;
+}
+
+/* Specific hover effects for each filter */
+.filter-all:hover:not(.active) {
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.1),
+    rgba(139, 92, 246, 0.1)
+  );
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+.filter-active:hover:not(.active) {
+  background: linear-gradient(
+    135deg,
+    rgba(6, 214, 160, 0.1),
+    rgba(52, 211, 153, 0.1)
+  );
+  border-color: rgba(6, 214, 160, 0.3);
+  box-shadow: 0 4px 12px rgba(6, 214, 160, 0.15);
+}
+
+.filter-completed:hover:not(.active) {
+  background: linear-gradient(
+    135deg,
+    rgba(245, 158, 11, 0.1),
+    rgba(251, 191, 36, 0.1)
+  );
+  border-color: rgba(245, 158, 11, 0.3);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+}
+
+/* Common active hover effect */
+.filter-btn.active:hover {
+  transform: translateY(-2px);
 }
 
 .search-box {
@@ -289,12 +422,12 @@ button {
   border-radius: 12px;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.04);
   overflow: hidden;
-  border: 1px solid rgba(99, 102, 241, 0.1);
+  border: 2px solid rgba(99, 102, 241, 0.2);
 }
 
 .todo-item {
   padding: 20px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 2px solid var(--border-color);
   display: flex;
   align-items: center;
   gap: 15px;
@@ -356,9 +489,9 @@ button {
 }
 
 .priority {
-  width: 4px;
+  width: 6px;
   height: 40px;
-  border-radius: 2px;
+  border-radius: 3px;
   margin-right: 10px;
 }
 
@@ -486,4 +619,66 @@ button {
   height: 100%;
   background: linear-gradient(90deg, #8b5cf6, #06d6a0);
   transition: width 0.5s ease;
+}
+
+/* Enhanced visual indicators for active state */
+.filter-all.active {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-color: #6366f1;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4),
+    0 0 0 3px rgba(99, 102, 241, 0.1);
+  animation: pulseBlue 2s infinite;
+}
+
+.filter-active.active {
+  background: linear-gradient(135deg, #06d6a0, #34d399);
+  border-color: #06d6a0;
+  box-shadow: 0 4px 15px rgba(6, 214, 160, 0.4),
+    0 0 0 3px rgba(6, 214, 160, 0.1);
+  animation: pulseGreen 2s infinite;
+}
+
+.filter-completed.active {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  border-color: #f59e0b;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4),
+    0 0 0 3px rgba(245, 158, 11, 0.1);
+  animation: pulseOrange 2s infinite;
+}
+
+/* Subtle pulse animations */
+@keyframes pulseBlue {
+  0%,
+  100% {
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4),
+      0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.6),
+      0 0 0 4px rgba(99, 102, 241, 0.15);
+  }
+}
+
+@keyframes pulseGreen {
+  0%,
+  100% {
+    box-shadow: 0 4px 15px rgba(6, 214, 160, 0.4),
+      0 0 0 3px rgba(6, 214, 160, 0.1);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(6, 214, 160, 0.6),
+      0 0 0 4px rgba(6, 214, 160, 0.15);
+  }
+}
+
+@keyframes pulseOrange {
+  0%,
+  100% {
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4),
+      0 0 0 3px rgba(245, 158, 11, 0.1);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.6),
+      0 0 0 4px rgba(245, 158, 11, 0.15);
+  }
 }

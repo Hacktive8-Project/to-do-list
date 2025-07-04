@@ -72,13 +72,22 @@
             placeholder="Cari tugas..."
             oninput="filterTasks()"
           />
-          <button class="filter-btn active" onclick="setFilter('all')">
+          <button
+            class="filter-btn filter-all active"
+            onclick="setFilter('all')"
+          >
             Semua
           </button>
-          <button class="filter-btn" onclick="setFilter('active')">
+          <button
+            class="filter-btn filter-active"
+            onclick="setFilter('active')"
+          >
             Aktif
           </button>
-          <button class="filter-btn" onclick="setFilter('completed')">
+          <button
+            class="filter-btn filter-completed"
+            onclick="setFilter('completed')"
+          >
             Selesai
           </button>
           <select onchange="sortTasks(this.value)">

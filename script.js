@@ -112,17 +112,21 @@ function closeEditModal() {
 // Filtering and sorting
 function setFilter(filter) {
   currentFilter = filter;
+
+  // Remove active class from all filter buttons
   document.querySelectorAll(".filter-btn").forEach((btn) => {
     btn.classList.remove("active");
-    if (
-      btn.textContent.toLowerCase().includes(filter) ||
-      (filter === "all" && btn.textContent === "Semua") ||
-      (filter === "active" && btn.textContent === "Aktif") ||
-      (filter === "completed" && btn.textContent === "Selesai")
-    ) {
-      btn.classList.add("active");
-    }
   });
+
+  // Add active class to the appropriate button
+  if (filter === "all") {
+    document.querySelector(".filter-all").classList.add("active");
+  } else if (filter === "active") {
+    document.querySelector(".filter-active").classList.add("active");
+  } else if (filter === "completed") {
+    document.querySelector(".filter-completed").classList.add("active");
+  }
+
   renderTasks();
 }
 
