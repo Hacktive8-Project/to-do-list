@@ -179,12 +179,168 @@ body {
   margin-bottom: 20px;
 }
 
-@media (max-width: 768px) {
-  .input-group {
-    grid-template-columns: 1fr;
+/* Filter buttons wrapper */
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Touch optimization */
+@media (hover: none) and (pointer: coarse) {
+  /* Styles for touch devices */
+  .btn-icon {
+    min-width: 48px;
+    min-height: 48px;
+    padding: 12px;
   }
 
-  /* Responsive theme toggle */
+  .filter-btn {
+    min-height: 48px;
+    padding: 12px 20px 12px 28px;
+  }
+
+  .theme-toggle {
+    min-height: 48px;
+    padding: 14px 22px;
+  }
+
+  .btn-primary {
+    min-height: 48px;
+    padding: 14px 20px;
+  }
+
+  .btn-export, .btn-import {
+    min-height: 48px;
+    padding: 12px 16px;
+  }
+
+  input, select {
+    min-height: 48px;
+    padding: 14px 12px;
+  }
+
+  .todo-checkbox {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .priority {
+    border-radius: 4px;
+  }
+
+  .todo-category {
+    border-radius: 16px;
+  }
+
+  .filter-btn {
+    border-radius: 22px;
+  }
+}
+
+/* Reduce animations on low-end devices */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .filter-btn.active {
+    animation: none !important;
+  }
+
+  .header::after {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .header {
+    margin: -15px -15px 20px -15px;
+    padding: 20px 0;
+  }
+
+  .header h1 {
+    font-size: 2em;
+    margin-bottom: 8px;
+  }
+
+  .header p {
+    font-size: 0.9em;
+  }
+
+  .input-group {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    padding: 15px;
+  }
+
+  .stat-card h3 {
+    font-size: 0.8em;
+  }
+
+  .stat-card .value {
+    font-size: 1.8em;
+  }
+
+  .controls {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .filters {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+
+  .search-box {
+    min-width: auto;
+    width: 100%;
+    order: -1;
+  }
+
+  .filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 10px 18px 10px 26px;
+    font-size: 0.9em;
+    flex: 1;
+    min-width: 80px;
+    text-align: center;
+  }
+
+  .filter-btn.active::before {
+    left: 10px;
+    font-size: 0.7em;
+  }
+
+  /* Theme toggle responsive */
   .theme-toggle {
     top: 15px;
     right: 15px;
@@ -202,22 +358,69 @@ body {
     font-size: 1.2em;
   }
 
-  .filter-btn {
-    padding: 10px 18px 10px 26px;
-    font-size: 0.9em;
-  }
-
-  .filter-btn.active::before {
-    left: 10px;
-    font-size: 0.7em;
-  }
-
   /* JSON Controls */
   .json-controls {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
     width: 100%;
-    gap: 5px;
   }
+
+  .btn-export, .btn-import {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 0.85em;
+  }
+
+  /* Todo items mobile optimization */
+  .todo-item {
+    padding: 15px;
+    flex-wrap: wrap;
+  }
+
+  .todo-content {
+    min-width: 0;
+    word-break: break-word;
+  }
+
+  .todo-text {
+    font-size: 1em;
+  }
+
+  .todo-meta {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .todo-actions {
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+
+  .btn-icon {
+    padding: 10px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Modal responsive */
+  .modal-content {
+    margin: 20px;
+    width: calc(100% - 40px);
+    max-width: none;
+    padding: 25px;
+  }
+
+  .modal-body {
+    gap: 12px;
+  }
+
+  .modal-header h2 {
+    font-size: 1.5em;
+  }
+}
 
   .btn-export,
   .btn-import {
@@ -227,6 +430,24 @@ body {
 }
 
 @media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    margin: -10px -10px 15px -10px;
+    padding: 15px 0;
+  }
+
+  .header h1 {
+    font-size: 1.8em;
+    margin-bottom: 5px;
+  }
+
+  .header p {
+    font-size: 0.85em;
+  }
+
   .theme-toggle {
     position: relative;
     top: auto;
@@ -244,25 +465,261 @@ body {
     padding-bottom: 20px;
   }
 
+  .stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .stat-card {
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .stat-card h3 {
+    font-size: 0.75em;
+    margin-bottom: 8px;
+  }
+
+  .stat-card .value {
+    font-size: 1.5em;
+  }
+
+  .controls {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .input-group {
+    gap: 10px;
+  }
+
+  input, select, button {
+    padding: 14px 12px;
+    font-size: 16px; /* Prevents zoom on iOS */
+    border-radius: 8px;
+  }
+
+  .btn-primary {
+    padding: 16px 12px;
+    font-weight: 600;
+    min-height: 48px;
+  }
+
   .filters {
-    justify-content: center;
+    gap: 12px;
   }
 
   .filter-btn {
-    min-width: 80px;
-    text-align: center;
+    padding: 12px 16px 12px 24px;
+    font-size: 0.9em;
+    min-height: 44px;
+    border-radius: 25px;
   }
 
   .json-controls {
-    order: -1;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .btn-export,
-  .btn-import {
-    width: auto;
+  .btn-export, .btn-import {
+    width: 100%;
+    padding: 12px;
+    min-height: 44px;
+    font-size: 0.9em;
+  }
+
+  .todo-item {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .priority {
+    width: 4px;
+    height: 35px;
+  }
+
+  .todo-checkbox {
+    width: 20px;
+    height: 20px;
+  }
+
+  .todo-text {
+    font-size: 0.95em;
+    line-height: 1.4;
+  }
+
+  .todo-category {
+    padding: 2px 8px;
+    font-size: 0.75em;
+  }
+
+  .todo-date {
+    font-size: 0.8em;
+  }
+
+  .btn-icon {
+    padding: 8px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .btn-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .empty-state {
+    padding: 40px 15px;
+  }
+
+  .empty-state svg {
+    width: 80px;
+    height: 80px;
+  }
+
+  .empty-state h3 {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+  }
+
+  .empty-state p {
+    font-size: 0.9em;
+  }
+
+  .modal-content {
+    margin: 15px;
+    width: calc(100% - 30px);
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .modal-header {
+    margin-bottom: 15px;
+  }
+
+  .modal-header h2 {
+    font-size: 1.3em;
+  }
+
+  .modal-body {
+    gap: 10px;
+  }
+
+  .progress-bar {
+    height: 6px;
+    margin-bottom: 20px;
+  }
+}
+
+/* Extra Small Devices (320px and below) */
+@media (max-width: 320px) {
+  .container {
+    padding: 8px;
+  }
+
+  .header h1 {
+    font-size: 1.6em;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .stat-card {
+    padding: 10px;
+    text-align: center;
+  }
+
+  .stat-card .value {
+    font-size: 1.4em;
+  }
+
+  .theme-toggle {
     min-width: 120px;
+    padding: 12px 16px;
+    font-size: 0.8em;
+  }
+
+  .filter-btn {
+    font-size: 0.85em;
+    padding: 10px 14px 10px 22px;
+  }
+
+  .json-controls {
+    gap: 8px;
+  }
+
+  .btn-export, .btn-import {
+    padding: 10px;
+    font-size: 0.85em;
+  }
+}
+
+/* Landscape Mobile Orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+  .header {
+    padding: 15px 0;
+  }
+
+  .header h1 {
+    font-size: 2em;
+  }
+
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .theme-toggle {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+  }
+
+  .controls {
+    padding: 15px;
+  }
+
+  .filters {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .filter-btn {
+    flex: none;
+    min-width: 80px;
+  }
+
+  .json-controls {
+    flex-direction: row;
+  }
+}
+
+/* Tablet Portrait */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding: 25px;
+  }
+
+  .input-group {
+    grid-template-columns: 1fr 180px 140px 140px 110px;
+    gap: 12px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .filters {
+    gap: 12px;
+  }
+
+  .todo-item {
+    padding: 18px;
   }
 }
 
