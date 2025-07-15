@@ -12,9 +12,15 @@
       <div class="header">
         <h1>📝 To-Do List App</h1>
         <p>Kelola tugas Anda dengan mudah</p>
-        <button class="theme-toggle" onclick="toggleTheme()">
-          <span class="theme-icon">🌙</span>
-          <span class="theme-text">Dark Mode</span>
+        <button
+          class="theme-toggle"
+          onclick="toggleTheme()"
+          aria-label="Toggle theme"
+        >
+          <div class="theme-toggle-inner">
+            <span class="theme-icon">🌙</span>
+          </div>
+          <span class="theme-tooltip">Dark Mode</span>
         </button>
       </div>
 

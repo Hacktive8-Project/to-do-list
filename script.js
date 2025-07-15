@@ -67,22 +67,62 @@ function importTasksFromJSON(file) {
 function toggleTheme() {
   const body = document.body;
   const themeToggle = document.querySelector(".theme-toggle");
-  const currentTheme = body.getAttribute("data-theme");
+  const themeIcon = themeToggle.querySelector(".theme-icon");
+  const themeTooltip = themeToggle.querySelector(".theme-tooltip");
+
+  const currentTheme = body.getAttribute("data-theme") || "light";
   const newTheme = currentTheme === "dark" ? "light" : "dark";
 
+  // Add transition class for smooth animation
+  themeToggle.classList.add("switching");
+
+  // Update theme
   body.setAttribute("data-theme", newTheme);
 
-  // Update button text and add smooth transition
+  // Update button content with proper structure
   if (newTheme === "dark") {
-    themeToggle.innerHTML =
-      '<span class="theme-icon">☀️</span><span class="theme-text">Light Mode</span>';
+    themeIcon.textContent = "☀️";
+    themeTooltip.textContent = "Light Mode";
+    themeToggle.setAttribute("aria-label", "Switch to Light Mode");
   } else {
-    themeToggle.innerHTML =
-      '<span class="theme-icon">🌙</span><span class="theme-text">Dark Mode</span>';
+    themeIcon.textContent = "🌙";
+    themeTooltip.textContent = "Dark Mode";
+    themeToggle.setAttribute("aria-label", "Switch to Dark Mode");
   }
 
   // Save theme preference
   localStorage.setItem("theme", newTheme);
+
+  // Remove transition class after animation
+  setTimeout(() => {
+    themeToggle.classList.remove("switching");
+  }, 400);
+
+  console.log(`Theme switched to: ${newTheme}`);
+}
+
+// Enhanced theme toggle for mobile compatibility
+function setupThemeToggle() {
+  const themeToggle = document.querySelector(".theme-toggle");
+
+  // Add touch event listeners untuk mobile
+  themeToggle.addEventListener("touchstart", function (e) {
+    e.preventDefault();
+    this.classList.add("switching");
+  });
+
+  themeToggle.addEventListener("touchend", function (e) {
+    e.preventDefault();
+    // Small delay to show visual feedback
+    setTimeout(() => {
+      toggleTheme();
+    }, 100);
+  });
+
+  // Prevent double-tap zoom on mobile
+  themeToggle.addEventListener("touchmove", function (e) {
+    e.preventDefault();
+  });
 }
 
 // Task management
@@ -400,19 +440,23 @@ function initializeApp() {
   // Load saved theme
   const savedTheme = localStorage.getItem("theme") || "light";
   document.body.setAttribute("data-theme", savedTheme);
-
   // Set initial button state
-  const themeToggle = document.querySelector(".theme-toggle");
+  const themeIcon = document.querySelector(".theme-icon");
+  const themeTooltip = document.querySelector(".theme-tooltip");
+
   if (savedTheme === "dark") {
-    themeToggle.innerHTML =
-      '<span class="theme-icon">☀️</span><span class="theme-text">Light Mode</span>';
+    themeIcon.textContent = "☀️";
+    themeTooltip.textContent = "Light Mode";
   } else {
-    themeToggle.innerHTML =
-      '<span class="theme-icon">🌙</span><span class="theme-text">Dark Mode</span>';
+    themeIcon.textContent = "🌙";
+    themeTooltip.textContent = "Dark Mode";
   }
 
   renderTasks();
   updateStats();
+
+  // Setup theme toggle for mobile
+  setupThemeToggle();
 
   // Set today's date as default
   document.getElementById("dueDateInput").valueAsDate = new Date();
@@ -422,3 +466,27 @@ function initializeApp() {
 
 // Initialize app
 initializeApp();
+
+// Enhanced theme toggle for mobile compatibility
+function setupThemeToggle() {
+  const themeToggle = document.querySelector(".theme-toggle");
+
+  // Add touch event listeners untuk mobile
+  themeToggle.addEventListener("touchstart", function (e) {
+    e.preventDefault();
+    this.classList.add("switching");
+  });
+
+  themeToggle.addEventListener("touchend", function (e) {
+    e.preventDefault();
+    // Small delay to show visual feedback
+    setTimeout(() => {
+      toggleTheme();
+    }, 100);
+  });
+
+  // Prevent double-tap zoom on mobile
+  themeToggle.addEventListener("touchmove", function (e) {
+    e.preventDefault();
+  });
+}
